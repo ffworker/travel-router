@@ -14,6 +14,43 @@ Do not commit Wi-Fi credentials, NetBird setup keys, peer databases, tokens, pri
 
 The placeholders and helper commands in this guide should be adapted to your own host, addresses, paths, users, and implementation. Do not copy the private instance values from another deployment.
 
+## Optional: capture and save a working configuration
+
+After recovering a missing component and verifying that it works, save the important files while the device is still healthy. Recovery without capture only fixes the immediate incident; capture makes the next rebuild easier.
+
+Create a device-specific backup directory in your preferred secure location, then copy or export the files that actually exist on your appliance. Typical non-secret items include:
+
+- the deployed application and helper scripts;
+- `travel-router-*.service` and `travel-router-*.timer` units;
+- the USB NetworkManager profile definition, after removing passwords or other secrets;
+- the DHCP configuration, after removing Wi-Fi credentials and unrelated host data;
+- the persistent forwarding and firewall configuration;
+- the display configuration and hardware-specific boot files;
+- a short inventory containing package versions, enabled services, interfaces, routes, and mount points.
+
+For example, collect a reviewable diagnostic snapshot and selected service files like this:
+
+```bash
+BACKUP_DIR="$HOME/travel-router-backup-$(date +%F)"
+mkdir -p "$BACKUP_DIR"/{inventory,etc/systemd,config}
+
+hostnamectl > "$BACKUP_DIR/inventory/hostnamectl.txt"
+ip -br addr > "$BACKUP_DIR/inventory/ip-addresses.txt"
+ip route > "$BACKUP_DIR/inventory/routes.txt"
+systemctl list-unit-files 'travel-router-*' --no-pager > "$BACKUP_DIR/inventory/services.txt"
+
+sudo cp -a /etc/systemd/system/travel-router-*.service \
+  "$BACKUP_DIR/etc/systemd/" 2>/dev/null || true
+sudo cp -a /etc/systemd/system/travel-router-*.timer \
+  "$BACKUP_DIR/etc/systemd/" 2>/dev/null || true
+sudo cp -a /etc/ssh/sshd_config.d/91-netbird-direct-ssh.conf \
+  "$BACKUP_DIR/config/" 2>/dev/null || true
+sudo nft list ruleset > "$BACKUP_DIR/inventory/nft-ruleset.txt"
+```
+
+Review the collected files before storing or committing them. Do not copy live Wi-Fi profiles, NetBird identity databases, setup keys, tokens, private SSH keys, cookies, or passwords into a public repository. Keep secret-bearing files in protected appliance storage or an approved secret store and back them up separately.
+
+A private repository such as `ffworker/infra-configs` is the recommended location for the device-specific non-secret record, but it is not required. A secure encrypted backup, password-manager attachment, or another private repository is also suitable. Record the backup location and date somewhere you can find it later.
 
 ## 1. Confirm the USB gadget layer
 
