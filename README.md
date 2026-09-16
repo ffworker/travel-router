@@ -42,7 +42,6 @@ Only one input is accepted per slow e-Paper refresh. Presses while the panel is 
 
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — deployed network, display, and control design
 - [`docs/RECOVERY.md`](docs/RECOVERY.md) — bounded recovery and reboot acceptance procedure
-- [`examples/`](examples/) — safe generic example values and templates for a build-along deployment
 - [`config/pi3-jumper/91-netbird-direct-ssh.conf`](config/pi3-jumper/91-netbird-direct-ssh.conf) — required OpenSSH listener drop-in for the control relay
 
 Instance identity and addresses belong in the private `ffworker/infra-configs` record at `hosts/travel-router01/`, not in this reusable appliance repository.

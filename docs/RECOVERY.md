@@ -4,6 +4,17 @@ Use this procedure when the appliance is partially working. Restore the last-kno
 
 Exact addresses and identity values are kept in the private `ffworker/infra-configs` instance record. Substitute those recorded values where this runbook uses `<...>`.
 
+## Optional private configuration backup
+
+This public repository contains the reusable recovery procedure, not every device-specific configuration file. The commands below are helper commands for inspection and recovery; they are not a requirement to use this project and they are not a complete backup by themselves.
+
+For a more recoverable device, back up the important non-secret scripts, service definitions, USB/network configuration, and other files needed to rebuild your own appliance. A private Git repository such as `ffworker/infra-configs` is recommended for that device-specific record, but any secure, backed-up location that fits your setup is fine. This backup is optional and is only intended to help if the device fails and its configuration needs to be rewritten.
+
+Do not commit Wi-Fi credentials, NetBird setup keys, peer databases, tokens, private SSH keys, cookies, or other live secrets. Keep those in the appliance's protected storage or an approved secret store, and back them up separately if needed.
+
+The placeholders and helper commands in this guide should be adapted to your own host, addresses, paths, users, and implementation. Do not copy the private instance values from another deployment.
+
+
 ## 1. Confirm the USB gadget layer
 
 On the appliance:
