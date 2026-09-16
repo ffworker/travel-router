@@ -37,6 +37,8 @@ from `/opt/travel-router/vendor/e-Paper/RaspberryPi_JetsonNano/python/lib`.
 Do not import the hardware module from a second process while the display
 service owns SPI/GPIO resources.
 
+The public [`examples/`](../examples/) directory contains safe generic values for readers following along. It is intentionally separate from the deployed instance record: use placeholders such as documentation-only networks and `.invalid` hostnames there, and keep real addresses, peer identities, command paths, and credentials in the private instance record or on the appliance.
+
 | Key | BCM GPIO | Deployed action |
 | --- | ---: | --- |
 | K1 | 5 | wake Jellyfin |
